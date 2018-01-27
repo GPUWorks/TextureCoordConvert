@@ -121,7 +121,7 @@ void TextureCoordConvert::oneProcess(QString filePath, QString convertedFilePath
 			if (tokens.size() > 0 && tokens[0] == "vt") {
 
 				if (tokens.size() < 3) {
-					QMessageBox::critical(this, "Error", filePath + " invalid token size");
+					QMessageBox::critical(this, "Error", filePath + " invalid vt token size");
 					continue;
 				}
 
@@ -139,6 +139,22 @@ void TextureCoordConvert::oneProcess(QString filePath, QString convertedFilePath
 				QStringList newTokens;
 
 				newTokens << tokens[0] << tokens[1] << QString::number(y);
+
+				out << newTokens.join(" ") << "\n";
+			}
+			else if (tokens.size() > 0 && tokens[0] == "vn") {
+				if (tokens.size() < 4) {
+					QMessageBox::critical(this, "Error", filePath + " invalid vn token size");
+					continue;
+				}
+
+				double x = tokens[3].toDouble(); x = -x;
+				double y = tokens[2].toDouble();
+				double z = tokens[1].toDouble();
+
+				QStringList newTokens;
+
+				newTokens <<QString("vn ")<<QString::number(x) << QString::number(y) << QString::number(z);
 
 				out << newTokens.join(" ") << "\n";
 			}
